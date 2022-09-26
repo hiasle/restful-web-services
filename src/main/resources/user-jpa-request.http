@@ -26,12 +26,22 @@ Content-Type: application/json
 <> 2022-09-24T101930.400.json
 
 ###
-GET http://localhost:8080/jpa/users/10003
+GET http://localhost:8080/jpa/users/1
 
 <> 2022-09-25T092142.404.json
 
 ###
-GET http://localhost:8080/jpa/users/10001/posts
+DELETE http://localhost:8080/jpa/users/10003
+
+
+### Posts
+###
+GET http://localhost:8080/jpa/users/1/posts
 
 ###
-DELETE http://localhost:8080/jpa/users/10003
+POST http://localhost:8080/jpa/users/1/posts
+Content-Type: application/json
+
+{
+  "description": "I want to learn Azure Fundamentals -2"
+}

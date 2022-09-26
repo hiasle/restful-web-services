@@ -1,5 +1,6 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import com.in28minutes.rest.webservices.restfulwebservices.jpa.PostRepository;
 import com.in28minutes.rest.webservices.restfulwebservices.jpa.UserRepository;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -23,20 +24,23 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class UserJpaResource {
 
-    private UserRepository repository;
+    private final UserRepository userRepository;
 
-    public UserJpaResource(UserRepository repository) {
-        this.repository = repository;
+    private final PostRepository postRepository;
+
+    public UserJpaResource(UserRepository repository, PostRepository postRepository) {
+        this.userRepository = repository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping(path = "/jpa/users")
     public List<User> retrieveAllUsers() {
-        return this.repository.findAll();
+        return this.userRepository.findAll();
     }
 
     @GetMapping(path = "/jpa/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
-        Optional<User> user = this.repository.findById(id);
+        Optional<User> user = this.userRepository.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id);
         }
@@ -51,12 +55,12 @@ public class UserJpaResource {
 
     @DeleteMapping(path = "/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        this.repository.deleteById(id);
+        this.userRepository.deleteById(id);
     }
 
     @GetMapping(path = "/jpa/users/{id}/posts")
     public List<Post> retrievePostsForUser(@PathVariable int id) {
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id);
@@ -67,10 +71,28 @@ public class UserJpaResource {
 
     @PostMapping(path = "/jpa/users")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = this.repository.save(user);
+        User savedUser = this.userRepository.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedUser.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping(path = "/jpa/users/{id}/posts")
+    public ResponseEntity<Object> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id:" + id);
+        }
+
+        post.setUser(user.get());
+        Post savedPost = this.postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedPost.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
     }
