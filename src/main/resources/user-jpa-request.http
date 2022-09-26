@@ -1,0 +1,37 @@
+###
+GET http://localhost:8080/jpa/users
+Accept: application/json
+
+<> 2022-09-25T110214.200.json
+<> 2022-09-25T110117.200.json
+<> 2022-09-25T105738.200.json
+<> 2022-09-25T105716.200.json
+<> 2022-09-24T102720.200.json
+
+###
+POST http://localhost:8080/jpa/users
+Content-Type: application/json
+
+{
+  "user_name": "Matthias",
+  "birth_date": "2021-05-24"
+}
+
+<> 2022-09-24T102938.400.json
+<> 2022-09-24T102920.400.json
+<> 2022-09-24T102742.400.json
+<> 2022-09-24T102725.400.json
+<> 2022-09-24T102715.400.json
+<> 2022-09-24T102028.400.json
+<> 2022-09-24T101930.400.json
+
+###
+GET http://localhost:8080/jpa/users/10003
+
+<> 2022-09-25T092142.404.json
+
+###
+GET http://localhost:8080/jpa/users/10001/posts
+
+###
+DELETE http://localhost:8080/jpa/users/10003

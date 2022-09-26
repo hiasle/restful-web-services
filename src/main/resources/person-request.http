@@ -1,0 +1,43 @@
+###
+GET http://localhost:8080/v1/person
+
+<> 2022-09-25T131941.200.json
+<> 2022-09-25T131929.200.json
+
+###
+GET http://localhost:8080/v2/person
+
+<> 2022-09-25T132044.200.json
+
+###
+GET http://localhost:8080/person?version=1
+
+<> 2022-09-25T131932.200.json
+<> 2022-09-25T131322.200.json
+<> 2022-09-25T131312.404.json
+<> 2022-09-25T131219.404.json
+
+###
+GET http://localhost:8080/person?version=2
+
+<> 2022-09-25T132058.200.json
+<> 2022-09-25T132048.200.json
+<> 2022-09-25T131637.200.json
+
+###
+GET http://localhost:8080/person/header
+X-API-VERSION: 1
+
+<> 2022-09-25T132648.200.json
+
+###
+GET http://localhost:8080/person/header
+X-API-VERSION: 2
+
+###
+GET http://localhost:8080/person/accept
+Accept: application/vnd.company.app-v1+json
+
+###
+GET http://localhost:8080/person/accept
+Accept: application/vnd.company.app-v2+json

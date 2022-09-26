@@ -1,0 +1,5 @@
+###
+GET http://localhost:8080/filtering
+
+###
+GET http://localhost:8080/filtering-list
