@@ -43,5 +43,5 @@ POST http://localhost:8080/jpa/users/1/posts
 Content-Type: application/json
 
 {
-  "description": "I want to learn Azure Fundamentals -2"
+  "description": "I want to learn docker"
 }
