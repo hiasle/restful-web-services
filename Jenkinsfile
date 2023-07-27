@@ -20,7 +20,7 @@ pipeline {
         stage('Deploy') {
             agent any
             steps {
-                sh 'Deploying'
+                echo 'Deploying'
             }
         }
     }
