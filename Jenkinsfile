@@ -1,15 +1,23 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage('Build') {
+            agent any
             steps {
-               echo 'This is a minimal pipeline.'
+                echo 'Building'
+            }
+        }
+        stage('Checkpoint') {
+            agent none //running outside of any node or workspace
+            steps {
+                checkpoint 'Completed Build'
             }
         }
         stage('Deploy') {
-                    steps {
-                       echo 'This is a minimal pipeline.'
-                    }
-                }
+            agent any
+            steps {
+                sh 'Deploying'
+            }
+        }
     }
 }
