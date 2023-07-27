@@ -2,12 +2,12 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            agent any
+            agent { label 'elias-build' }
             steps {
                 echo 'Building'
             }
         }
-        stage('Checkpoint') {
+        /* stage('Checkpoint') {
             agent none //running outside of any node or workspace
             input {
                     message 'Bitte approven'
@@ -16,9 +16,18 @@ pipeline {
             steps {
                 echo 'Approved'
             }
-        }
+        } */
         stage('Deploy') {
-            agent any
+            when {
+                expression {
+                    input message: 'Bitte approven'
+                    // if input is Aborted, the whole build will fail, otherwise
+                    // we must return true to continue
+                    return true
+                }
+                beforeAgent true
+            }
+            agent { label 'elias-build' }
             steps {
                 echo 'Deploying'
             }
