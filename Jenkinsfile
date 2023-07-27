@@ -17,7 +17,7 @@ pipeline {
                 echo 'Approved'
             }
         }
-        stage('Example Deploy') {
+        /* stage('Example Deploy') {
             when {
                 beforeOptions true
                 branch 'testing'
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo "Deploying to ${deployEnv}"
             }
-        }
+        } */
         stage('Deploy') {
             agent any
             steps {
