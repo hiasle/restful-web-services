@@ -9,11 +9,11 @@ pipeline {
         }
         stage('Checkpoint') {
             agent none //running outside of any node or workspace
-            steps {
-                input {
+            input {
                     message 'Bitte approven'
                     ok 'OK'
                 }
+            steps {
                 echo 'Approved'
             }
         }
