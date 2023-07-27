@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            agent { label 'elias-build' }
+            agent any
             steps {
                 echo 'Building'
             }
@@ -27,7 +27,7 @@ pipeline {
                 }
                 beforeAgent true
             }
-            agent { label 'elias-build' }
+            agent any
             steps {
                 echo 'Deploying'
             }
